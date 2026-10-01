@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep dashboard routes presentation-only with shared demo data until a backend is explicitly connected, so the prototype remains usable without persistence.
+- Centralize dashboard navigation and shared interface primitives under `src/components/dashboard`, so role-aware shell behavior stays consistent across routes.
