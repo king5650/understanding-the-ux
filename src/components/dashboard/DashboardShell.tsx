@@ -27,6 +27,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const saved = window.localStorage.getItem("as-sidebar-collapsed");
@@ -91,7 +92,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </header>
         <main className="min-w-0 animate-fade-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
       </div>
-      {searchOpen && <div className="fixed inset-0 z-30 flex items-start justify-center bg-overlay px-4 pt-[12vh]" onMouseDown={() => setSearchOpen(false)}><div className="w-full max-w-2xl rounded-md border border-border bg-popover shadow-panel animate-scale-in" onMouseDown={(e) => e.stopPropagation()}><div className="flex items-center gap-3 border-b border-border p-4"><Search className="size-5 text-muted-foreground" /><input autoFocus className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" placeholder="Search by name, number, or phone" /><Button variant="ghost" size="icon" aria-label="Close search" onClick={() => setSearchOpen(false)}><X className="size-5" /></Button></div><div className="p-3"><p className="px-2 py-2 text-xs font-semibold uppercase text-muted-foreground">Quick results</p>{["Order AS-2841 · Mireille N.", "Booking · Carine A.", "Product · Travertine Ivory"].map((result) => <button key={result} className="flex min-h-11 w-full items-center rounded px-3 text-left text-sm hover:bg-muted">{result}</button>)}</div></div></div>}
+      {searchOpen && <div className="fixed inset-0 z-30 flex items-start justify-center bg-overlay px-4 pt-[12vh]" onMouseDown={() => setSearchOpen(false)}><div className="w-full max-w-2xl rounded-md border border-border bg-popover shadow-panel animate-scale-in" onMouseDown={(e) => e.stopPropagation()}><div className="flex items-center gap-3 border-b border-border p-4"><Search className="size-5 text-muted-foreground" /><input autoFocus className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" placeholder="Search by name, number, or phone" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /><Button variant="ghost" size="icon" aria-label="Close search" onClick={() => setSearchOpen(false)}><X className="size-5" /></Button></div><div className="p-3"><p className="px-2 py-2 text-xs font-semibold uppercase text-muted-foreground">Quick results</p>{[{ label: "Order AS-2841 · Mireille N.", to: "/orders" as const }, { label: "Booking · Carine A.", to: "/bookings" as const }, { label: "Product · Travertine Ivory", to: "/products" as const }].filter((result) => result.label.toLowerCase().includes(searchTerm.toLowerCase())).map((result) => <Link key={result.label} to={result.to} onClick={() => setSearchOpen(false)} className="flex min-h-11 w-full items-center rounded px-3 text-left text-sm hover:bg-muted">{result.label}</Link>)}</div></div></div>}
     </div>
   );
 }
