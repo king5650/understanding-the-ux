@@ -72,7 +72,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      <div className={`transition-[padding] duration-200 ${collapsed ? "md:pl-[76px]" : "md:pl-[236px]"}`}>
+      <div className={`min-w-0 transition-[padding] duration-200 ${collapsed ? "md:pl-[76px]" : "md:pl-[236px]"}`}>
         <header className="sticky top-0 z-10 flex h-20 items-center gap-3 border-b border-border bg-background/95 px-4 backdrop-blur sm:px-6 lg:px-8">
           <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation" onClick={() => setDrawer(true)}><Menu className="size-5" /></Button>
           <button onClick={() => setSearchOpen(true)} className="flex h-11 min-w-0 max-w-xl flex-1 items-center gap-3 rounded-md border border-border bg-card px-3 text-left text-sm text-muted-foreground transition-colors hover:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
@@ -89,7 +89,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             {profileOpen && <div className="absolute right-0 top-13 z-40 w-48 rounded-md border border-border bg-popover p-2 shadow-panel animate-scale-in"><Link to="/settings" className="block rounded px-3 py-2 text-sm hover:bg-muted">Profile & settings</Link><button className="w-full rounded px-3 py-2 text-left text-sm text-destructive hover:bg-muted">Log out</button></div>}
           </div>
         </header>
-        <main className="animate-fade-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
+        <main className="min-w-0 animate-fade-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
       </div>
       {searchOpen && <div className="fixed inset-0 z-30 flex items-start justify-center bg-overlay px-4 pt-[12vh]" onMouseDown={() => setSearchOpen(false)}><div className="w-full max-w-2xl rounded-md border border-border bg-popover shadow-panel animate-scale-in" onMouseDown={(e) => e.stopPropagation()}><div className="flex items-center gap-3 border-b border-border p-4"><Search className="size-5 text-muted-foreground" /><input autoFocus className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" placeholder="Search by name, number, or phone" /><Button variant="ghost" size="icon" aria-label="Close search" onClick={() => setSearchOpen(false)}><X className="size-5" /></Button></div><div className="p-3"><p className="px-2 py-2 text-xs font-semibold uppercase text-muted-foreground">Quick results</p>{["Order AS-2841 · Mireille N.", "Booking · Carine A.", "Product · Travertine Ivory"].map((result) => <button key={result} className="flex min-h-11 w-full items-center rounded px-3 text-left text-sm hover:bg-muted">{result}</button>)}</div></div></div>}
     </div>
