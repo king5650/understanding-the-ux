@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { DashboardShell } from "../components/dashboard/DashboardShell";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -125,6 +126,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <DashboardShell><Outlet /></DashboardShell>
+      <Toaster position="bottom-right" richColors closeButton />
     </QueryClientProvider>
   );
 }
