@@ -11,3 +11,4 @@
 
 - Keep dashboard routes presentation-only with shared demo data until a backend is explicitly connected, so the prototype remains usable without persistence.
 - Centralize dashboard navigation and shared interface primitives under `src/components/dashboard`, so role-aware shell behavior stays consistent across routes.
+- Keep demo CRUD state in dashboard presentation components and reuse the shared dialog/notification kit, because the prototype must remain interactive without suggesting server persistence.
