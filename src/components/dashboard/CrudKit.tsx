@@ -39,6 +39,6 @@ export function ConfirmDelete({ name, onClose, onConfirm }: { name: string; onCl
   </CrudDialog>;
 }
 
-export function Field({ label, defaultValue = "", type = "text", required = true, className = "" }: { label: string; defaultValue?: string | number; type?: string; required?: boolean; className?: string }) {
+export function Field({ label, defaultValue = "", type = "text", required = true, className = "" }: { label: string; defaultValue?: string | number | undefined; type?: string; required?: boolean; className?: string }) {
   return <label className={`block text-xs font-semibold text-muted-foreground ${className}`}>{label}<input name={label} type={type} required={required} defaultValue={defaultValue} className="mt-2 min-h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground outline-none transition-shadow focus:ring-2 focus:ring-ring"/></label>;
 }
