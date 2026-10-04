@@ -1,5 +1,6 @@
 import { AlertTriangle, Check, LoaderCircle, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { toast } from "sonner";
 import { Button } from "./Button";
 
@@ -7,9 +8,10 @@ export function notify(action: string, subject: string) {
   toast.success(`${subject} ${action}`, { description: "Your dashboard has been updated." });
 }
 
-export function CrudDialog({ title, description, children, submitLabel = "Save changes", danger = false, onClose, onSubmit }: { title: string; description?: string; children: ReactNode; submitLabel?: string; danger?: boolean; onClose: () => void; onSubmit: () => void }) {
+export function CrudDialog({ title, description, children, submitLabel = "Save changes", danger = false, layoutId, onClose, onSubmit }: { title: string; description?: string; children: ReactNode; submitLabel?: string; danger?: boolean; layoutId?: string; onClose: () => void; onSubmit: () => void }) {
   const [saving, setSaving] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     panel.current?.focus();
@@ -23,13 +25,13 @@ export function CrudDialog({ title, description, children, submitLabel = "Save c
   };
   return <div className="fixed inset-0 z-40 grid place-items-center p-4" role="presentation">
     <button className="absolute inset-0 bg-overlay animate-fade-in" aria-label="Close dialog" onClick={onClose}/>
-    <div ref={panel} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="crud-title" className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-lg border border-border bg-card shadow-panel outline-none animate-dialog-morph">
+    <motion.div ref={panel} layoutId={reduceMotion ? undefined : layoutId} layout="position" transition={{ type: "spring", stiffness: 390, damping: 34, mass: 0.72 }} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="crud-title" className={`relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-lg border border-border bg-card shadow-panel outline-none ${layoutId ? "" : "animate-dialog-morph"}`}>
       <div className="sticky top-0 z-10 flex items-start justify-between gap-5 border-b border-border bg-card/95 px-6 py-5 backdrop-blur">
         <div><h2 id="crud-title" className="font-heading text-xl font-semibold">{title}</h2>{description&&<p className="mt-1 text-sm text-muted-foreground">{description}</p>}</div>
         <Button variant="ghost" size="icon" aria-label="Close dialog" onClick={onClose}><X className="size-5"/></Button>
       </div>
       <form onSubmit={submit}><div className="grid gap-4 p-6 sm:grid-cols-2">{children}</div><div className="sticky bottom-0 flex justify-end gap-3 border-t border-border bg-card/95 px-6 py-4 backdrop-blur"><Button type="button" onClick={onClose}>Cancel</Button><Button type="submit" variant={danger?"danger":"primary"} disabled={saving}>{saving?<LoaderCircle className="size-4 animate-spin"/>:danger?<Trash2 className="size-4"/>:<Check className="size-4"/>}{saving?"Saving…":submitLabel}</Button></div></form>
-    </div>
+    </motion.div>
   </div>;
 }
 

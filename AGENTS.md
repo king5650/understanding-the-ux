@@ -12,3 +12,4 @@
 - Keep dashboard routes presentation-only with shared demo data until a backend is explicitly connected, so the prototype remains usable without persistence.
 - Centralize dashboard navigation and shared interface primitives under `src/components/dashboard`, so role-aware shell behavior stays consistent across routes.
 - Keep demo CRUD state in the in-memory shared dashboard store and reuse the shared dialog/notification kit, because in-app navigation should preserve edits without implying server persistence.
+- Use Motion shared layout transitions for dashboard source-to-surface interactions and honor reduced-motion preferences, because motion should reinforce spatial context without blocking access.

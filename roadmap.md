@@ -9,7 +9,7 @@
 - [x] Add session-only create, edit, and delete actions across management pages
 - [x] Verify CRUD interactions across desktop and mobile
 - [ ] Add shared morph transitions for orders, bookings, and product creation
-- [ ] Add reduced-motion-aware stat count-ups
+- [x] Add reduced-motion-aware stat count-ups
 - [ ] Verify motion flows across desktop and mobile
 
 Backend-dependent authentication, persistence, real-time updates, and file uploads remain outside this presentation prototype.
