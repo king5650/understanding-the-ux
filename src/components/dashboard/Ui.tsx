@@ -26,9 +26,9 @@ function CountUp({ value }: { value: string }) {
     number.set(0);
     const controls = animate(number, target, { duration: 0.85, ease: [0.22, 1, 0.36, 1] });
     return () => controls.stop();
-  }, [target, reduced, number, match]);
+  }, [target, reduced, number, value]);
   if (!match) return value;
-  return <motion.span aria-label={value}><motion.span aria-hidden>{display}</motion.span></motion.span>;
+  return <motion.span aria-label={value} className="tabular-nums"><motion.span aria-hidden>{display}</motion.span></motion.span>;
 }
 export function Status({ value }: { value: string }) {
   const kind = ["Paid", "Fulfilled", "Confirmed", "Active", "Replied", "Resolved"].includes(value) ? "success" : ["Cancelled", "Refunded", "Unresolved"].includes(value) ? "danger" : value === "Pending" || value === "Requested" || value === "New" ? "warning" : "neutral";
@@ -39,6 +39,6 @@ export function Panel({ title, action, children, className = "" }: { title: stri
 }
 export function Drawer({ title, children, onClose, layoutId }: { title: string; children: ReactNode; onClose: () => void; layoutId?: string }) {
   const reduceMotion = useReducedMotion();
-  return <><motion.button initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} aria-label="Close detail" className="fixed inset-0 z-[19] bg-overlay" onClick={onClose} /><motion.aside layoutId={reduceMotion ? undefined : layoutId} transition={{ type: "spring", stiffness: 360, damping: 34, mass: 0.78 }} className={`fixed inset-y-0 right-0 z-20 w-full max-w-xl overflow-y-auto bg-card shadow-panel ${layoutId ? "" : "animate-slide-in-right"}`}><div className="sticky top-0 flex h-20 items-center justify-between border-b border-border bg-card px-6"><h2 className="font-heading text-lg font-semibold">{title}</h2><Button variant="ghost" size="icon" aria-label="Close detail" onClick={onClose}><X className="size-5" /></Button></div><div className="p-6">{children}</div></motion.aside></>;
+  return <><motion.button initial={reduceMotion ? false : {opacity:0}} animate={{opacity:1}} {...(!reduceMotion ? {exit:{opacity:0}} : {})} aria-label="Close detail" className="fixed inset-0 z-[19] bg-overlay" onClick={onClose} /><motion.aside {...(!reduceMotion && layoutId ? { layoutId } : {})} transition={{ type: "spring", stiffness: 360, damping: 34, mass: 0.78 }} className={`fixed inset-y-0 right-0 z-20 w-full max-w-xl overflow-y-auto bg-card shadow-panel ${layoutId || reduceMotion ? "" : "animate-slide-in-right"}`}><div className="sticky top-0 flex h-20 items-center justify-between border-b border-border bg-card px-6"><h2 className="font-heading text-lg font-semibold">{title}</h2><Button variant="ghost" size="icon" aria-label="Close detail" onClick={onClose}><X className="size-5" /></Button></div><div className="p-6">{children}</div></motion.aside></>;
 }
 export function RowAction() { return <ChevronRight className="size-4 text-muted-foreground" />; }
