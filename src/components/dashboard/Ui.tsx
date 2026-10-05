@@ -26,9 +26,9 @@ function CountUp({ value }: { value: string }) {
     number.set(0);
     const controls = animate(number, target, { duration: 0.85, ease: [0.22, 1, 0.36, 1] });
     return () => controls.stop();
-  }, [target, reduced, number, match]);
+  }, [target, reduced, number, value]);
   if (!match) return value;
-  return <motion.span aria-label={value}><motion.span aria-hidden>{display}</motion.span></motion.span>;
+  return <motion.span aria-label={value} className="tabular-nums"><motion.span aria-hidden>{display}</motion.span></motion.span>;
 }
 export function Status({ value }: { value: string }) {
   const kind = ["Paid", "Fulfilled", "Confirmed", "Active", "Replied", "Resolved"].includes(value) ? "success" : ["Cancelled", "Refunded", "Unresolved"].includes(value) ? "danger" : value === "Pending" || value === "Requested" || value === "New" ? "warning" : "neutral";
