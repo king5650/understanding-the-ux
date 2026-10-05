@@ -8,7 +8,7 @@ export function notify(action: string, subject: string) {
   toast.success(`${subject} ${action}`, { description: "Your dashboard has been updated." });
 }
 
-export function CrudDialog({ title, description, children, submitLabel = "Save changes", danger = false, layoutId, onClose, onSubmit }: { title: string; description?: string; children: ReactNode; submitLabel?: string; danger?: boolean; layoutId?: string; onClose: () => void; onSubmit: () => void }) {
+export function CrudDialog({ title, description, children, submitLabel = "Save changes", danger = false, layoutId, onClose, onSubmit }: { title: string; description?: string; children: ReactNode; submitLabel?: string; danger?: boolean; layoutId?: string | undefined; onClose: () => void; onSubmit: () => void }) {
   const [saving, setSaving] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
