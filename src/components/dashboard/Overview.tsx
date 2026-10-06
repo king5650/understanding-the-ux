@@ -1,17 +1,27 @@
-import { AlertTriangle, CalendarDays, CircleDollarSign, Mail, PackageSearch, ShoppingBag } from "lucide-react";
+import { AlertTriangle, ArrowRight, CalendarDays, CircleDollarSign, Mail, PackageSearch, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { bookings, orders } from "./data";
 import { PageHeader, Panel, StatCard, Status } from "./Ui";
+import { useDemoRows } from "./demoState";
 
 const ranges = { "7d": [30, 45, 37, 62, 55, 78, 86], "30d": [20, 34, 30, 45, 42, 54, 49, 64, 58, 72, 67, 83], "90d": [18, 23, 29, 35, 31, 42, 48, 45, 57, 63, 71, 82] };
+const initialProfile = { name: "Tata Kevin", email: "tata.kevin@as-africa.com", title: "Operations Director" };
 export function Overview() {
+ const [profile] = useDemoRows("profile", initialProfile);
+ const initials = profile.name.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
  const [range, setRange] = useState<keyof typeof ranges>("30d"); const [table, setTable] = useState(false); const values = ranges[range];
  const points = values.map((v, i) => `${(i/(values.length-1))*100},${100-v}`).join(" ");
  return <>
   <PageHeader eyebrow="Overview" title="Good evening, Kevin" />
   <Link to="/issues" className="mb-5 flex min-h-14 items-center gap-3 rounded-md border border-primary/30 bg-primary-soft px-4 text-sm text-primary-strong transition-colors hover:border-primary"><AlertTriangle className="size-5 shrink-0" /><span><strong>2 issues need attention.</strong> One payment webhook failed and one booking lock timed out.</span><span className="ml-auto hidden font-semibold sm:inline">Review issues →</span></Link>
   <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5"><StatCard label="Today's bookings" value="4" trend="+12%" icon={<CalendarDays className="size-5" />} /><StatCard label="Pending orders" value="8" trend="+3%" icon={<ShoppingBag className="size-5" />} /><StatCard label="Revenue this month" value="FCFA 8.42M" trend="+18.4%" icon={<CircleDollarSign className="size-5" />} /><StatCard label="Low stock" value="3" trend="-2" icon={<PackageSearch className="size-5" />} /><StatCard label="Unread messages" value="3" trend="+1" icon={<Mail className="size-5" />} /></div>
+  <Link to="/profile" className="mt-3 flex min-h-16 items-center gap-4 rounded-md border border-border bg-card px-4 shadow-card transition-colors hover:border-ring">
+    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary font-heading text-sm font-bold text-primary-foreground">{initials}</span>
+    <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold">{profile.name}</span><span className="block truncate text-xs text-muted-foreground">{profile.title} · {profile.email}</span></span>
+    <span className="hidden rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-primary sm:inline">View my profile</span>
+    <ArrowRight className="size-4 shrink-0 text-muted-foreground sm:hidden" />
+  </Link>
   <div className="mt-5 grid min-w-0 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
    <Panel className="min-w-0" title="Revenue" action={<div className="flex items-center gap-1">{(["7d","30d","90d"] as const).map(r => <button key={r} onClick={() => setRange(r)} className={`min-h-9 rounded px-3 text-xs font-semibold ${range===r?"bg-foreground text-background":"text-muted-foreground hover:bg-muted"}`}>{r}</button>)}<button onClick={() => setTable(!table)} className="ml-2 min-h-9 rounded px-2 text-xs font-semibold text-primary hover:bg-primary-soft">{table?"Chart":"Data"}</button></div>}>
     <div className="p-5">{table ? <table className="w-full text-sm"><thead><tr className="text-left text-xs text-muted-foreground"><th className="pb-3">Period</th><th className="pb-3 text-right">Revenue</th></tr></thead><tbody>{values.map((v,i)=><tr key={i} className="border-t border-border"><td className="py-2.5">Period {i+1}</td><td className="py-2.5 text-right font-semibold">FCFA {(v*8200).toLocaleString()}</td></tr>)}</tbody></table> : <div><div className="mb-2 flex items-end justify-between"><div><p className="font-heading text-2xl font-semibold">FCFA 8,420,000</p><p className="text-xs text-success">+18.4% from previous period</p></div></div><svg viewBox="0 0 100 100" className="h-64 w-full overflow-visible" preserveAspectRatio="none" role="img" aria-label="Revenue trend increasing over the selected period"><defs><linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="var(--primary)" stopOpacity=".2"/><stop offset="1" stopColor="var(--primary)" stopOpacity="0"/></linearGradient></defs>{[20,40,60,80].map(y=><line key={y} x1="0" x2="100" y1={y} y2={y} stroke="var(--border)" strokeWidth=".5"/>)}<polygon points={`0,100 ${points} 100,100`} fill="url(#revenueFill)"/><polyline points={points} fill="none" stroke="var(--primary)" strokeWidth="2" vectorEffect="non-scaling-stroke"/><circle cx="100" cy={100-(values.at(-1) ?? 0)} r="2" fill="var(--primary)" vectorEffect="non-scaling-stroke"/></svg><div className="flex justify-between text-[10px] text-muted-foreground"><span>Sep 1</span><span>Sep 10</span><span>Sep 20</span><span>Sep 30</span></div></div>}</div>
