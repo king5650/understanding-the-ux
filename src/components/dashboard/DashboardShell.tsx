@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Bell, BookOpen, Boxes, CalendarDays, ChevronLeft, CircleAlert, ClipboardList,
   FolderKanban, LayoutDashboard, Menu, MessageSquare, Package, Search, Settings,
-  Users, Wrench, X,
+  UserRound, Users, Wrench, X,
 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "./Button";
@@ -68,6 +68,9 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         <div className="border-t border-sidebar-border p-3">
           <Link to="/settings" aria-label={collapsed ? "Settings" : undefined} className={`flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors ${pathname === "/settings" ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground"}`}>
             <Settings className="size-[18px]" />{!collapsed && <span>Settings</span>}
+          </Link>
+          <Link to="/profile" aria-label={collapsed ? "My profile" : undefined} className={`mt-1 flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors ${pathname === "/profile" ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground"}`}>
+            <UserRound className="size-[18px]" />{!collapsed && <span>My profile</span>}
           </Link>
           <Button variant="ghost" size="icon" className="mt-3 hidden w-full text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground md:flex" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} onClick={toggleCollapsed}><ChevronLeft className={`size-5 transition-transform ${collapsed ? "rotate-180" : ""}`} /></Button>
         </div>
