@@ -87,7 +87,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <button onClick={() => setProfileOpen(!profileOpen)} className="flex min-h-11 items-center gap-3 rounded-md px-1.5 text-left hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <span className="grid size-9 place-items-center rounded-full bg-secondary font-heading text-xs font-bold text-secondary-foreground">TK</span><span className="hidden lg:block"><span className="block text-sm font-semibold">Tata Kevin</span><span className="block text-xs text-muted-foreground">Super Admin</span></span>
             </button>
-            {profileOpen && <div className="absolute right-0 top-13 z-40 w-48 rounded-md border border-border bg-popover p-2 shadow-panel animate-scale-in"><Link to="/settings" className="block rounded px-3 py-2 text-sm hover:bg-muted">Profile & settings</Link><button className="w-full rounded px-3 py-2 text-left text-sm text-destructive hover:bg-muted">Log out</button></div>}
+            {profileOpen && <div className="absolute right-0 top-13 z-40 w-48 rounded-md border border-border bg-popover p-2 shadow-panel animate-scale-in"><Link to="/profile" onClick={() => setProfileOpen(false)} className="block rounded px-3 py-2 text-sm hover:bg-muted">My profile</Link><Link to="/settings" onClick={() => setProfileOpen(false)} className="block rounded px-3 py-2 text-sm hover:bg-muted">Settings</Link><button className="w-full rounded px-3 py-2 text-left text-sm text-destructive hover:bg-muted">Log out</button></div>}
           </div>
         </header>
         <main className="min-w-0 animate-fade-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
