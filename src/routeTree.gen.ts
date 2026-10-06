@@ -17,6 +17,7 @@ import { Route as IssuesRouteImport } from './routes/issues'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TeamRouteImport } from './routes/team'
@@ -61,6 +62,11 @@ const ProductsRoute = ProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRoute
   '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
+  '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRoute
   '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
+  '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRoute
   '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
+  '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/orders'
     | '/products'
+    | '/profile'
     | '/projects'
     | '/settings'
     | '/team'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/orders'
     | '/products'
+    | '/profile'
     | '/projects'
     | '/settings'
     | '/team'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/orders'
     | '/products'
+    | '/profile'
     | '/projects'
     | '/settings'
     | '/team'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRoute
   OrdersRoute: typeof OrdersRoute
   ProductsRoute: typeof ProductsRoute
+  ProfileRoute: typeof ProfileRoute
   ProjectsRoute: typeof ProjectsRoute
   SettingsRoute: typeof SettingsRoute
   TeamRoute: typeof TeamRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRoute,
   OrdersRoute: OrdersRoute,
   ProductsRoute: ProductsRoute,
+  ProfileRoute: ProfileRoute,
   ProjectsRoute: ProjectsRoute,
   SettingsRoute: SettingsRoute,
   TeamRoute: TeamRoute,
